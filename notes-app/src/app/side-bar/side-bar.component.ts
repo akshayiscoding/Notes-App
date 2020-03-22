@@ -31,13 +31,6 @@ export class SideBarComponent implements OnInit {
 
   ngOnInit() {
     this.getData();
-
-    // console.log("SideBarComponent -> ngOnChanges -> this.textForSearch", this.textForSearch)
-    // this.data = JSON.parse(localStorage.getItem('notes')).slice().reverse();
-    // this.selectFirstItem();
-    // this.filteredData = this.data;
-    // this.search(this.textForSearch);
-
   }
 
   ngDoCheck() {
@@ -48,7 +41,7 @@ export class SideBarComponent implements OnInit {
       if (element.note == this.textForSearch) {
         this.filteredData = [];
         this.filteredData.push(element);
-      } else{
+      } else {
         this.filteredData = this.data;
       }
     });
