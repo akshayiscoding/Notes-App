@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import * as moment from 'moment';
 
 @Component({
@@ -8,16 +8,25 @@ import * as moment from 'moment';
 })
 export class WriteNotesComponent implements OnInit {
 
+  @Input() selectedNoteItem;
+  @Input() isDisabled;
+
   note: string;
   noteWritingDate = new Date();
-  // noteWritingDate = moment().format('MMMM Do YYYY, h:mm:ss a');
+  isDisable: boolean = false;
   notesArray = [];
 
   constructor() { }
 
   ngOnChanges() {
-    // this.noteWritingDate = moment().format('MMMM Do YYYY, h:mm:ss a');
+    if (this.selectedNoteItem != undefined) {
+      this.note = this.selectedNoteItem.note;
+      this.isDisabled = true;
+    } else {
+      this.isDisabled = false
+    }
   }
+
 
   ngDoCheck() {
     this.noteWritingDate = new Date();
@@ -28,7 +37,7 @@ export class WriteNotesComponent implements OnInit {
 
   submit() {
     if (this.note != undefined || this.note != '') {
-      this.notesArray.push({ "note": this.note, "date": this.noteWritingDate });
+      this.notesArray.push({ "id": Math.floor(Math.random() * 10000000000000), "note": this.note, "date": this.noteWritingDate });
       localStorage.setItem('notes', JSON.stringify(this.notesArray));
     }
     this.note = '';
