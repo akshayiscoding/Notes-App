@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
@@ -6,8 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  icon:string = 'expand-1';
+  icon: string = 'expand-1';
+  searchText: string;
+  @Output() isDisable: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() searchedText: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+
+  data = [];
   constructor() { }
 
   ngOnInit() {
@@ -23,6 +28,19 @@ export class NavbarComponent implements OnInit {
     document.getElementById("mySidebar").style.width = "0";
     document.getElementById("main").style.marginLeft = "0";
     this.icon = 'expand-1';
+  }
+
+  search(searchText){
+    this.searchedText.emit(searchText);
+  }
+
+  new() {
+    this.isDisable.emit(false);
+  }
+
+  delete() {
+    this.data = JSON.parse(localStorage.getItem("notes"));
+    localStorage.removeItem('notes');
   }
 
 }
